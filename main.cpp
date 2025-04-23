@@ -65,7 +65,15 @@ int main(int argc, char *argv[])
         if (line.empty())
             continue;
 
-        istringstream iss(line);
+        istringstream normalizer(line);
+        string token, cleanLine;
+        while (normalizer >> token)
+        {
+            if (!cleanLine.empty())
+                cleanLine += " ";
+            cleanLine += token;
+        }
+        istringstream iss(cleanLine);
         string commandStr;
         iss >> commandStr;
 
@@ -73,7 +81,7 @@ int main(int argc, char *argv[])
             continue;
         char command = toupper(commandStr[0]);
 
-        cout << "Cmd " << cmdCount << ": " << line << endl;
+        cout << "Cmd " << cmdCount << ": " << cleanLine << endl;
 
         if (!isValidCommand(command))
         {
